@@ -17,313 +17,326 @@
     background: #f5f5f2;
     color: #1a1a1a;
     min-height: 100vh;
-    padding-bottom: 2rem;
+    padding-bottom: 80px;
   }
-
   .header {
     background: #185fa5;
     color: white;
-    padding: 3rem 1.25rem 1.25rem;
+    padding: 3rem 1.25rem 1rem;
     padding-top: calc(3rem + env(safe-area-inset-top));
   }
   .header h1 { font-size: 22px; font-weight: 500; }
-  .header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
-
-  .timeline {
-    display: flex;
-    gap: 8px;
-    padding: 1rem 1rem 0;
+  .header p { font-size: 13px; opacity: 0.8; margin-top: 3px; }
+  .nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: white; border-top: 0.5px solid #e0e0d8;
+    display: flex; padding-bottom: env(safe-area-inset-bottom); z-index: 100;
   }
-  .tblock {
-    flex: 1;
-    background: white;
-    border-radius: 10px;
-    padding: 0.6rem 0.5rem;
-    text-align: center;
-    border: 0.5px solid #e0e0d8;
+  .nav-btn {
+    flex: 1; padding: 10px 0; text-align: center; cursor: pointer;
+    border: none; background: none; font-size: 11px; color: #aaa;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
   }
+  .nav-btn.active { color: #185fa5; }
+  .nav-icon { font-size: 20px; }
+  .page { display: none; padding: 0 1rem 1rem; }
+  .page.active { display: block; }
+  .pain-card { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 1rem 1.25rem; margin: 1rem 0 0.75rem; }
+  .pain-label { font-size: 13px; color: #666; margin-bottom: 0.75rem; }
+  .pain-slider { width: 100%; margin-bottom: 0.5rem; }
+  .pain-display { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .pain-value { font-size: 28px; font-weight: 500; color: #185fa5; }
+  .pain-desc { font-size: 13px; color: #888; }
+  .pain-ends { display: flex; justify-content: space-between; font-size: 11px; color: #bbb; margin-top: 2px; }
+  .timeline { display: flex; gap: 8px; margin: 0.75rem 0; }
+  .tblock { flex: 1; background: white; border-radius: 10px; padding: 0.6rem 0.5rem; text-align: center; border: 0.5px solid #e0e0d8; }
   .tblock .label { font-size: 10px; color: #888; display: block; }
   .tblock .value { font-size: 13px; font-weight: 500; color: #1a1a1a; display: block; margin-top: 2px; }
-
-  .section { padding: 0 1rem; }
-  .phase-header {
-    font-size: 11px;
-    font-weight: 500;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 1.25rem 0 0.6rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .badge {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 2px 7px;
-    border-radius: 5px;
-    text-transform: none;
-    letter-spacing: 0;
-  }
+  .phase-header { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin: 1.25rem 0 0.6rem; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 5px; text-transform: none; letter-spacing: 0; }
   .b-now { background: #e6f0fb; color: #185fa5; }
   .b-w2  { background: #eaf3de; color: #3b6d11; }
   .b-w3  { background: #faeeda; color: #854f0b; }
-
-  .card {
-    background: white;
-    border: 0.5px solid #e0e0d8;
-    border-radius: 12px;
-    padding: 0.9rem 1rem;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: border-color 0.15s;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  .card.active { border-color: #378add; }
-  .card-top { display: flex; gap: 0.75rem; align-items: flex-start; }
-  .num {
-    font-size: 13px;
-    font-weight: 500;
-    color: #378add;
-    min-width: 18px;
-    margin-top: 1px;
-  }
+  .card { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 8px; -webkit-user-select: none; user-select: none; }
+  .card.done { border-color: #c0dd97; background: #f6fbed; }
+  .card-top { display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer; }
+  .num { font-size: 13px; font-weight: 500; color: #378add; min-width: 18px; margin-top: 1px; }
   .ex-name { font-size: 15px; font-weight: 500; margin: 0 0 2px; line-height: 1.3; }
   .ex-dose { font-size: 13px; color: #666; margin: 0; line-height: 1.4; }
   .hint { font-size: 12px; color: #bbb; margin-top: 5px; }
-
-  .detail {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.65;
-    display: none;
-    border-top: 0.5px solid #eee;
-    margin-top: 10px;
-    padding-top: 10px;
-  }
+  .detail { font-size: 13px; color: #555; line-height: 1.65; display: none; border-top: 0.5px solid #eee; margin-top: 10px; padding-top: 10px; }
   .detail.open { display: block; }
-
-  .done-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    border: 0.5px solid #e0e0d8;
-    background: #f5f5f2;
-    font-size: 12px;
-    color: #888;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-  }
-  .done-btn.checked {
-    background: #eaf3de;
-    color: #3b6d11;
-    border-color: #c0dd97;
-  }
-  .done-btn .check { font-size: 14px; }
-
-  .rule {
-    font-size: 12px;
-    color: #a32d2d;
-    background: #fcebeb;
-    border-radius: 8px;
-    padding: 0.7rem 0.9rem;
-    margin: 1rem 0 0;
-    line-height: 1.6;
-  }
-
+  .done-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; border-radius: 20px; border: 0.5px solid #e0e0d8; background: white; font-size: 13px; color: #888; cursor: pointer; transition: all 0.15s; }
+  .done-btn.checked { background: #eaf3de; color: #3b6d11; border-color: #c0dd97; }
+  .save-btn { width: 100%; padding: 14px; background: #185fa5; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 1rem; transition: opacity 0.15s; }
+  .save-btn:active { opacity: 0.85; }
+  .rule { font-size: 12px; color: #a32d2d; background: #fcebeb; border-radius: 8px; padding: 0.7rem 0.9rem; margin: 1rem 0 0; line-height: 1.6; }
+  .history-empty { text-align: center; padding: 3rem 1rem; color: #aaa; font-size: 14px; }
+  .history-entry { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 8px; }
+  .history-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .history-date { font-size: 13px; font-weight: 500; color: #1a1a1a; }
+  .pain-pill { font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 20px; }
+  .pain-low  { background: #eaf3de; color: #3b6d11; }
+  .pain-mid  { background: #faeeda; color: #854f0b; }
+  .pain-high { background: #fcebeb; color: #a32d2d; }
+  .ex-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .ex-tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #e6f0fb; color: #185fa5; }
+  .ex-tag.skipped { background: #f5f5f2; color: #bbb; }
+  .chart-wrap { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 1rem; margin: 1rem 0 0.75rem; }
+  .chart-title { font-size: 12px; color: #888; margin-bottom: 0.75rem; }
+  .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
+  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .chart-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+  .chart-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 3px; }
+  .chart-day { font-size: 9px; color: #bbb; }
   .reset-wrap { text-align: center; padding: 1.5rem 0 0; }
-  .reset-btn {
-    font-size: 13px;
-    color: #aaa;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px 16px;
-    border-radius: 8px;
-  }
-  .reset-btn:active { background: #eee; }
+  .reset-btn { font-size: 13px; color: #ccc; background: none; border: none; cursor: pointer; padding: 8px 16px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>Adductor Rehab</h1>
-  <p>Tap exercise to expand · tap circle to mark done</p>
+  <h1 id="page-title">Adductor Rehab</h1>
+  <p id="page-sub">Today's session</p>
 </div>
 
-<div class="timeline">
-  <div class="tblock"><span class="label">Jog return</span><span class="value">1–2 wks</span></div>
-  <div class="tblock"><span class="label">Easy running</span><span class="value">2–3 wks</span></div>
-  <div class="tblock"><span class="label">Full load</span><span class="value">4–6 wks</span></div>
-</div>
+<div class="page active" id="page-today">
+  <div class="pain-card">
+    <div class="pain-label">Pain level right now</div>
+    <input type="range" min="0" max="10" value="0" step="1" class="pain-slider" id="pain-slider" oninput="updatePain(this.value)">
+    <div class="pain-ends"><span>No pain</span><span>Worst pain</span></div>
+    <div class="pain-display">
+      <div class="pain-value" id="pain-value">0</div>
+      <div class="pain-desc" id="pain-desc">No pain</div>
+    </div>
+  </div>
 
-<div class="section">
+  <div class="timeline">
+    <div class="tblock"><span class="label">Jog return</span><span class="value">1–2 wks</span></div>
+    <div class="tblock"><span class="label">Easy running</span><span class="value">2–3 wks</span></div>
+    <div class="tblock"><span class="label">Full load</span><span class="value">4–6 wks</span></div>
+  </div>
 
   <div class="phase-header">Now — daily <span class="badge b-now">active recovery</span></div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">1</div>
-      <div style="flex:1">
-        <p class="ex-name">Isometric adductor squeeze</p>
-        <p class="ex-dose">3 × 10 sec holds — moderate effort only</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      Lie on back, knees bent, rolled towel between knees. Squeeze at 50–60% effort — not max. Zero pain. Loads the tissue without movement, begins rebuilding tensile tolerance. If you feel anything at the groin, reduce effort further.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-0">
+    <div class="card-top" onclick="toggle('ex-0')"><div class="num">1</div><div style="flex:1">
+      <p class="ex-name">Isometric adductor squeeze</p>
+      <p class="ex-dose">3 × 10 sec holds — moderate effort only</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Lie on back, knees bent, rolled towel between knees. Squeeze at 50–60% effort — not max. Zero pain. If you feel anything at the groin, reduce effort further.<br>
+      <button class="done-btn" onclick="markDone('ex-0', this)">○ Mark done</button></div>
   </div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">2</div>
-      <div style="flex:1">
-        <p class="ex-name">Side-lying adductor raise</p>
-        <p class="ex-dose">3 × 12 reps each side — 3 sec lowering phase</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      Lie on side, bottom leg straight, top leg bent with foot flat in front. Raise bottom leg 6–8 inches, hold 1 sec, lower slowly over 3 seconds. Keep hips stacked. Pain-free range only — stop short of any groin discomfort.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-1">
+    <div class="card-top" onclick="toggle('ex-1')"><div class="num">2</div><div style="flex:1">
+      <p class="ex-name">Side-lying adductor raise</p>
+      <p class="ex-dose">3 × 12 reps each side — 3 sec lowering phase</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Lie on side, bottom leg straight, top leg bent with foot flat in front. Raise bottom leg 6–8 inches, hold 1 sec, lower slowly over 3 seconds. Keep hips stacked.<br>
+      <button class="done-btn" onclick="markDone('ex-1', this)">○ Mark done</button></div>
   </div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">3</div>
-      <div style="flex:1">
-        <p class="ex-name">Single-leg glute bridge</p>
-        <p class="ex-dose">3 × 10 reps each side — squeeze and hold 1 sec</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      On your back, one knee bent, other leg extended. Drive through heel, raise hips, squeeze glute at top. Builds hip stability that reduces adductor demand during running gait. Essential — don't skip it.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-2">
+    <div class="card-top" onclick="toggle('ex-2')"><div class="num">3</div><div style="flex:1">
+      <p class="ex-name">Single-leg glute bridge</p>
+      <p class="ex-dose">3 × 10 reps each side — squeeze and hold 1 sec</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">On your back, one knee bent, other leg extended. Drive through heel, raise hips, squeeze glute at top. Builds hip stability that reduces adductor demand during running gait.<br>
+      <button class="done-btn" onclick="markDone('ex-2', this)">○ Mark done</button></div>
   </div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">4</div>
-      <div style="flex:1">
-        <p class="ex-name">Supine lumbar mobility sequence</p>
-        <p class="ex-dose">Once daily — hold each position 20–30 sec</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      Three movements in sequence:<br><br>
-      1. Knees to chest — gentle rock side to side.<br>
-      2. Supine rotation — knees together, drop to one side, hold, repeat.<br>
-      3. Figure-4 stretch — ankle over opposite knee, gentle pull.<br><br>
-      Addresses the lumbar/SI tightness contributing to the overall picture.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-3">
+    <div class="card-top" onclick="toggle('ex-3')"><div class="num">4</div><div style="flex:1">
+      <p class="ex-name">Supine lumbar mobility sequence</p>
+      <p class="ex-dose">Once daily — hold each position 20–30 sec</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">1. Knees to chest — gentle rock side to side.<br>2. Supine rotation — knees together, drop to one side, hold, repeat.<br>3. Figure-4 stretch — ankle over opposite knee, gentle pull.<br>
+      <button class="done-btn" onclick="markDone('ex-3', this)">○ Mark done</button></div>
   </div>
 
   <div class="phase-header">Week 2 — every other day <span class="badge b-w2">load progression</span></div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">5</div>
-      <div style="flex:1">
-        <p class="ex-name">Standing banded adduction</p>
-        <p class="ex-dose">3 × 12 reps each side — lightest band</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      Anchor a light band at ankle height. Stand sideways, band around working ankle. Draw leg across body in front, control the return slowly. Stay upright. Lightest band available — activation work, not strength training yet.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-4">
+    <div class="card-top" onclick="toggle('ex-4')"><div class="num">5</div><div style="flex:1">
+      <p class="ex-name">Standing banded adduction</p>
+      <p class="ex-dose">3 × 12 reps each side — lightest band</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Anchor a light band at ankle height. Stand sideways, band around working ankle. Draw leg across body in front, control the return slowly. Lightest band available.<br>
+      <button class="done-btn" onclick="markDone('ex-4', this)">○ Mark done</button></div>
   </div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">6</div>
-      <div style="flex:1">
-        <p class="ex-name">Copenhagen plank — short lever</p>
-        <p class="ex-dose">3 × 8 sec holds each side — build to 20 sec</p>
-        <p class="hint">Tap for cues</p>
-      </div>
-    </div>
-    <div class="detail">
-      Lie on side, bottom ankle on a low surface (chair seat). Support on forearm. Lift hips — straight line, bottom adductor doing the work. Short lever only (ankle, not knee on surface) until fully pain-free. Highest-value exercise in the sequence for running return.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-5">
+    <div class="card-top" onclick="toggle('ex-5')"><div class="num">6</div><div style="flex:1">
+      <p class="ex-name">Copenhagen plank — short lever</p>
+      <p class="ex-dose">3 × 8 sec holds each side — build to 20 sec</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Lie on side, bottom ankle on low surface (chair seat). Support on forearm. Lift hips — straight line, bottom adductor doing the work. Short lever only until fully pain-free.<br>
+      <button class="done-btn" onclick="markDone('ex-5', this)">○ Mark done</button></div>
   </div>
 
   <div class="phase-header">Week 3 — return to running <span class="badge b-w3">impact reintroduction</span></div>
 
-  <div class="card" onclick="toggle(this)">
-    <div class="card-top">
-      <div class="num">7</div>
-      <div style="flex:1">
-        <p class="ex-name">Run-walk protocol</p>
-        <p class="ex-dose">Day 1: 5 min walk / 10 min jog / 5 min walk</p>
-        <p class="hint">Tap for progression</p>
-      </div>
-    </div>
-    <div class="detail">
-      Gate: Copenhagen plank pain-free for 3 sessions before starting this.<br><br>
-      Day 1: 5 min walk warmup → 10 min easy jog → 5 min walk cooldown.<br><br>
-      Assess next morning. If pain-free: Day 3 do 20 min continuous easy jog. If not: return to week 2 for 3 more days.<br><br>
-      The morning-after response is the real test — not how you feel during the run.
-      <br>
-      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
-    </div>
+  <div class="card" id="ex-6">
+    <div class="card-top" onclick="toggle('ex-6')"><div class="num">7</div><div style="flex:1">
+      <p class="ex-name">Run-walk protocol</p>
+      <p class="ex-dose">Day 1: 5 min walk / 10 min jog / 5 min walk</p>
+      <p class="hint">Tap for progression</p>
+    </div></div>
+    <div class="detail">Gate: Copenhagen plank pain-free for 3 sessions before starting.<br><br>Day 1: 5 min walk → 10 min easy jog → 5 min walk.<br><br>Assess next morning. If pain-free: Day 3 do 20 min continuous easy jog. If not: return to week 2 for 3 more days.<br>
+      <button class="done-btn" onclick="markDone('ex-6', this)">○ Mark done</button></div>
   </div>
 
-  <div class="rule">Stop any exercise that reproduces inner thigh or groin symptoms. Mild awareness is acceptable — pain is not. If symptoms increase after a session, drop back one phase.</div>
-
-  <div class="reset-wrap">
-    <button class="reset-btn" onclick="resetAll()">Reset all</button>
-  </div>
-
+  <div class="rule">Stop any exercise that reproduces inner thigh or groin symptoms. Mild awareness is acceptable — pain is not.</div>
+  <button class="save-btn" onclick="saveSession()">Save today's session</button>
+  <div class="reset-wrap"><button class="reset-btn" onclick="resetToday()">Reset today</button></div>
 </div>
 
+<div class="page" id="page-history">
+  <div id="chart-container"></div>
+  <div id="history-list"></div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" id="nav-today" onclick="showPage('today')">
+    <span class="nav-icon">📋</span>Today
+  </button>
+  <button class="nav-btn" id="nav-history" onclick="showPage('history')">
+    <span class="nav-icon">📈</span>History
+  </button>
+</nav>
+
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+
+  const EXERCISES = ['Isometric squeeze','Side-lying raise','Glute bridge','Lumbar mobility','Banded adduction','Copenhagen plank','Run-walk protocol'];
+  const PAIN_DESCS = ['No pain','Very mild','Mild','Mild-moderate','Moderate','Moderate','Moderate-severe','Severe','Severe','Very severe','Worst pain'];
+
+  let todayDone = {};
+  let todayPain = 0;
+
+  function todayKey() { return new Date().toISOString().slice(0,10); }
+
+  function updatePain(val) {
+    todayPain = parseInt(val);
+    document.getElementById('pain-value').textContent = val;
+    document.getElementById('pain-desc').textContent = PAIN_DESCS[val];
+    document.getElementById('pain-value').style.color = val <= 3 ? '#3b6d11' : val <= 6 ? '#854f0b' : '#a32d2d';
   }
 
-  function toggle(card) {
+  function toggle(id) {
+    const card = document.getElementById(id);
     const detail = card.querySelector('.detail');
     const hint = card.querySelector('.hint');
     const isOpen = detail.classList.contains('open');
     detail.classList.toggle('open');
-    card.classList.toggle('active');
     hint.textContent = isOpen ? 'Tap for cues' : 'Tap to close';
   }
 
-  function markDone(e, btn) {
-    e.stopPropagation();
-    const isDone = btn.classList.toggle('checked');
-    btn.innerHTML = isDone
-      ? '<span class="check">✓</span> Done'
-      : '<span class="check">○</span> Mark done';
+  function markDone(id, btn) {
+    const idx = parseInt(id.split('-')[1]);
+    const isDone = !todayDone[idx];
+    todayDone[idx] = isDone;
+    btn.textContent = isDone ? '✓ Done' : '○ Mark done';
+    btn.classList.toggle('checked', isDone);
+    document.getElementById(id).classList.toggle('done', isDone);
   }
 
-  function resetAll() {
-    document.querySelectorAll('.done-btn.checked').forEach(btn => {
-      btn.classList.remove('checked');
-      btn.innerHTML = '<span class="check">○</span> Mark done';
-    });
+  function saveSession() {
+    const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
+    sessions[todayKey()] = { date: todayKey(), pain: todayPain, done: { ...todayDone } };
+    localStorage.setItem('rehab_sessions', JSON.stringify(sessions));
+    const btn = document.querySelector('.save-btn');
+    btn.textContent = '✓ Session saved';
+    btn.style.background = '#3b6d11';
+    setTimeout(() => { btn.textContent = 'Save today\'s session'; btn.style.background = '#185fa5'; }, 2000);
   }
+
+  function resetToday() {
+    todayDone = {}; todayPain = 0;
+    document.getElementById('pain-slider').value = 0;
+    updatePain(0);
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('done'));
+    document.querySelectorAll('.done-btn').forEach(b => { b.textContent = '○ Mark done'; b.classList.remove('checked'); });
+    document.querySelectorAll('.detail').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.hint').forEach(h => h.textContent = 'Tap for cues');
+  }
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.getElementById('nav-' + name).classList.add('active');
+    const titles = { today: ['Adductor Rehab', "Today's session"], history: ['History', 'Your progress over time'] };
+    document.getElementById('page-title').textContent = titles[name][0];
+    document.getElementById('page-sub').textContent = titles[name][1];
+    if (name === 'history') renderHistory();
+  }
+
+  function painClass(v) { return v <= 3 ? 'pain-low' : v <= 6 ? 'pain-mid' : 'pain-high'; }
+  function formatDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
+
+  function renderHistory() {
+    const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
+    const keys = Object.keys(sessions).sort();
+
+    if (keys.length === 0) {
+      document.getElementById('chart-container').innerHTML = '';
+      document.getElementById('history-list').innerHTML = '<div class="history-empty">No sessions logged yet.<br>Complete today\'s session and tap Save.</div>';
+      return;
+    }
+
+    const last14 = keys.slice(-14);
+    const bars = last14.map(k => {
+      const s = sessions[k];
+      const pct = Math.max((s.pain / 10) * 100, 3);
+      const color = s.pain <= 3 ? '#639922' : s.pain <= 6 ? '#BA7517' : '#E24B4A';
+      const day = new Date(k + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'narrow' });
+      return `<div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:${pct}%;background:${color}"></div></div><div class="chart-day">${day}</div></div>`;
+    }).join('');
+
+    document.getElementById('chart-container').innerHTML = `<div class="chart-wrap" style="margin-top:1rem"><div class="chart-title">Pain level trend (0–10)</div><div class="chart-bars">${bars}</div></div>`;
+
+    document.getElementById('history-list').innerHTML = keys.slice().reverse().map(k => {
+      const s = sessions[k];
+      const doneCount = Object.values(s.done).filter(Boolean).length;
+      const tags = EXERCISES.map((n, i) => `<span class="ex-tag ${s.done[i] ? '' : 'skipped'}">${n}</span>`).join('');
+      return `<div class="history-entry">
+        <div class="history-row"><div class="history-date">${formatDate(k)}</div><span class="pain-pill ${painClass(s.pain)}">Pain: ${s.pain}/10</span></div>
+        <div style="font-size:12px;color:#888;margin-bottom:6px">${doneCount} of ${EXERCISES.length} completed</div>
+        <div class="ex-tags">${tags}</div>
+      </div>`;
+    }).join('');
+  }
+
+  (function init() {
+    const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
+    const today = sessions[todayKey()];
+    // Only restore state if the saved session is from today
+    if (today && today.date === todayKey()) {
+      todayPain = today.pain;
+      todayDone = today.done || {};
+      document.getElementById('pain-slider').value = todayPain;
+      updatePain(todayPain);
+      Object.entries(todayDone).forEach(([idx, done]) => {
+        if (done) {
+          const card = document.getElementById('ex-' + idx);
+          if (card) {
+            card.classList.add('done');
+            const btn = card.querySelector('.done-btn');
+            if (btn) { btn.textContent = '✓ Done'; btn.classList.add('checked'); }
+          }
+        }
+      });
+    }
+    // If no session today, start clean regardless of what was saved before
+  })();
 </script>
 </body>
 </html>
