@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Rehab">
+<meta name="theme-color" content="#185fa5">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Adductor Rehab</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f2;
+    color: #1a1a1a;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+
+  .header {
+    background: #185fa5;
+    color: white;
+    padding: 3rem 1.25rem 1.25rem;
+    padding-top: calc(3rem + env(safe-area-inset-top));
+  }
+  .header h1 { font-size: 22px; font-weight: 500; }
+  .header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+
+  .timeline {
+    display: flex;
+    gap: 8px;
+    padding: 1rem 1rem 0;
+  }
+  .tblock {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    border: 0.5px solid #e0e0d8;
+  }
+  .tblock .label { font-size: 10px; color: #888; display: block; }
+  .tblock .value { font-size: 13px; font-weight: 500; color: #1a1a1a; display: block; margin-top: 2px; }
+
+  .section { padding: 0 1rem; }
+  .phase-header {
+    font-size: 11px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 1.25rem 0 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 5px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .b-now { background: #e6f0fb; color: #185fa5; }
+  .b-w2  { background: #eaf3de; color: #3b6d11; }
+  .b-w3  { background: #faeeda; color: #854f0b; }
+
+  .card {
+    background: white;
+    border: 0.5px solid #e0e0d8;
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .card.active { border-color: #378add; }
+  .card-top { display: flex; gap: 0.75rem; align-items: flex-start; }
+  .num {
+    font-size: 13px;
+    font-weight: 500;
+    color: #378add;
+    min-width: 18px;
+    margin-top: 1px;
+  }
+  .ex-name { font-size: 15px; font-weight: 500; margin: 0 0 2px; line-height: 1.3; }
+  .ex-dose { font-size: 13px; color: #666; margin: 0; line-height: 1.4; }
+  .hint { font-size: 12px; color: #bbb; margin-top: 5px; }
+
+  .detail {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.65;
+    display: none;
+    border-top: 0.5px solid #eee;
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .detail.open { display: block; }
+
+  .done-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 0.5px solid #e0e0d8;
+    background: #f5f5f2;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .done-btn.checked {
+    background: #eaf3de;
+    color: #3b6d11;
+    border-color: #c0dd97;
+  }
+  .done-btn .check { font-size: 14px; }
+
+  .rule {
+    font-size: 12px;
+    color: #a32d2d;
+    background: #fcebeb;
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    margin: 1rem 0 0;
+    line-height: 1.6;
+  }
+
+  .reset-wrap { text-align: center; padding: 1.5rem 0 0; }
+  .reset-btn {
+    font-size: 13px;
+    color: #aaa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+  }
+  .reset-btn:active { background: #eee; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Adductor Rehab</h1>
+  <p>Tap exercise to expand · tap circle to mark done</p>
+</div>
+
+<div class="timeline">
+  <div class="tblock"><span class="label">Jog return</span><span class="value">1–2 wks</span></div>
+  <div class="tblock"><span class="label">Easy running</span><span class="value">2–3 wks</span></div>
+  <div class="tblock"><span class="label">Full load</span><span class="value">4–6 wks</span></div>
+</div>
+
+<div class="section">
+
+  <div class="phase-header">Now — daily <span class="badge b-now">active recovery</span></div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">1</div>
+      <div style="flex:1">
+        <p class="ex-name">Isometric adductor squeeze</p>
+        <p class="ex-dose">3 × 10 sec holds — moderate effort only</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      Lie on back, knees bent, rolled towel between knees. Squeeze at 50–60% effort — not max. Zero pain. Loads the tissue without movement, begins rebuilding tensile tolerance. If you feel anything at the groin, reduce effort further.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">2</div>
+      <div style="flex:1">
+        <p class="ex-name">Side-lying adductor raise</p>
+        <p class="ex-dose">3 × 12 reps each side — 3 sec lowering phase</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      Lie on side, bottom leg straight, top leg bent with foot flat in front. Raise bottom leg 6–8 inches, hold 1 sec, lower slowly over 3 seconds. Keep hips stacked. Pain-free range only — stop short of any groin discomfort.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">3</div>
+      <div style="flex:1">
+        <p class="ex-name">Single-leg glute bridge</p>
+        <p class="ex-dose">3 × 10 reps each side — squeeze and hold 1 sec</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      On your back, one knee bent, other leg extended. Drive through heel, raise hips, squeeze glute at top. Builds hip stability that reduces adductor demand during running gait. Essential — don't skip it.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">4</div>
+      <div style="flex:1">
+        <p class="ex-name">Supine lumbar mobility sequence</p>
+        <p class="ex-dose">Once daily — hold each position 20–30 sec</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      Three movements in sequence:<br><br>
+      1. Knees to chest — gentle rock side to side.<br>
+      2. Supine rotation — knees together, drop to one side, hold, repeat.<br>
+      3. Figure-4 stretch — ankle over opposite knee, gentle pull.<br><br>
+      Addresses the lumbar/SI tightness contributing to the overall picture.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="phase-header">Week 2 — every other day <span class="badge b-w2">load progression</span></div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">5</div>
+      <div style="flex:1">
+        <p class="ex-name">Standing banded adduction</p>
+        <p class="ex-dose">3 × 12 reps each side — lightest band</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      Anchor a light band at ankle height. Stand sideways, band around working ankle. Draw leg across body in front, control the return slowly. Stay upright. Lightest band available — activation work, not strength training yet.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">6</div>
+      <div style="flex:1">
+        <p class="ex-name">Copenhagen plank — short lever</p>
+        <p class="ex-dose">3 × 8 sec holds each side — build to 20 sec</p>
+        <p class="hint">Tap for cues</p>
+      </div>
+    </div>
+    <div class="detail">
+      Lie on side, bottom ankle on a low surface (chair seat). Support on forearm. Lift hips — straight line, bottom adductor doing the work. Short lever only (ankle, not knee on surface) until fully pain-free. Highest-value exercise in the sequence for running return.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="phase-header">Week 3 — return to running <span class="badge b-w3">impact reintroduction</span></div>
+
+  <div class="card" onclick="toggle(this)">
+    <div class="card-top">
+      <div class="num">7</div>
+      <div style="flex:1">
+        <p class="ex-name">Run-walk protocol</p>
+        <p class="ex-dose">Day 1: 5 min walk / 10 min jog / 5 min walk</p>
+        <p class="hint">Tap for progression</p>
+      </div>
+    </div>
+    <div class="detail">
+      Gate: Copenhagen plank pain-free for 3 sessions before starting this.<br><br>
+      Day 1: 5 min walk warmup → 10 min easy jog → 5 min walk cooldown.<br><br>
+      Assess next morning. If pain-free: Day 3 do 20 min continuous easy jog. If not: return to week 2 for 3 more days.<br><br>
+      The morning-after response is the real test — not how you feel during the run.
+      <br>
+      <button class="done-btn" onclick="markDone(event, this)"><span class="check">○</span> Mark done</button>
+    </div>
+  </div>
+
+  <div class="rule">Stop any exercise that reproduces inner thigh or groin symptoms. Mild awareness is acceptable — pain is not. If symptoms increase after a session, drop back one phase.</div>
+
+  <div class="reset-wrap">
+    <button class="reset-btn" onclick="resetAll()">Reset all</button>
+  </div>
+
+</div>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+  }
+
+  function toggle(card) {
+    const detail = card.querySelector('.detail');
+    const hint = card.querySelector('.hint');
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open');
+    card.classList.toggle('active');
+    hint.textContent = isOpen ? 'Tap for cues' : 'Tap to close';
+  }
+
+  function markDone(e, btn) {
+    e.stopPropagation();
+    const isDone = btn.classList.toggle('checked');
+    btn.innerHTML = isDone
+      ? '<span class="check">✓</span> Done'
+      : '<span class="check">○</span> Mark done';
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.done-btn.checked').forEach(btn => {
+      btn.classList.remove('checked');
+      btn.innerHTML = '<span class="check">○</span> Mark done';
+    });
+  }
+</script>
+</body>
+</html>
