@@ -12,85 +12,118 @@
 <title>Adductor Rehab</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f5f5f2;
-    color: #1a1a1a;
-    min-height: 100vh;
-    padding-bottom: 80px;
-  }
-  .header {
-    background: #185fa5;
-    color: white;
-    padding: 3rem 1.25rem 1rem;
-    padding-top: calc(3rem + env(safe-area-inset-top));
-  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f2; color: #1a1a1a; min-height: 100vh; padding-bottom: 80px; }
+  .header { background: #185fa5; color: white; padding: 3rem 1.25rem 1rem; padding-top: calc(3rem + env(safe-area-inset-top)); }
   .header h1 { font-size: 22px; font-weight: 500; }
   .header p { font-size: 13px; opacity: 0.8; margin-top: 3px; }
-  .nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: white; border-top: 0.5px solid #e0e0d8;
-    display: flex; padding-bottom: env(safe-area-inset-bottom); z-index: 100;
-  }
-  .nav-btn {
-    flex: 1; padding: 10px 0; text-align: center; cursor: pointer;
-    border: none; background: none; font-size: 11px; color: #aaa;
-    display: flex; flex-direction: column; align-items: center; gap: 3px;
-  }
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 0.5px solid #e0e0d8; display: flex; padding-bottom: env(safe-area-inset-bottom); z-index: 100; }
+  .nav-btn { flex: 1; padding: 10px 0; cursor: pointer; border: none; background: none; font-size: 11px; color: #aaa; display: flex; flex-direction: column; align-items: center; gap: 3px; }
   .nav-btn.active { color: #185fa5; }
   .nav-icon { font-size: 20px; }
   .page { display: none; padding: 0 1rem 1rem; }
   .page.active { display: block; }
-  .pain-card { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 1rem 1.25rem; margin: 1rem 0 0.75rem; }
-  .pain-label { font-size: 13px; color: #666; margin-bottom: 0.75rem; }
-  .pain-slider { width: 100%; margin-bottom: 0.5rem; }
-  .pain-display { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-  .pain-value { font-size: 28px; font-weight: 500; color: #185fa5; }
-  .pain-desc { font-size: 13px; color: #888; }
-  .pain-ends { display: flex; justify-content: space-between; font-size: 11px; color: #bbb; margin-top: 2px; }
+
+  /* PAIN SECTION */
+  .pain-section { margin: 1rem 0 0.75rem; }
+  .section-title { font-size: 12px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .pain-grid { display: flex; gap: 8px; }
+  .pain-card { flex: 1; background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 0.75rem 0.6rem; text-align: center; }
+  .pain-card-label { font-size: 11px; color: #888; margin-bottom: 8px; }
+  .pain-radios { display: flex; flex-direction: column; gap: 4px; }
+  .pain-radio-row { display: flex; align-items: center; justify-content: space-between; gap: 4px; cursor: pointer; }
+  .pain-radio-row input[type=radio] { display: none; }
+  .pain-radio-btn {
+    width: 100%; padding: 4px 2px; border-radius: 6px;
+    border: 0.5px solid #e0e0d8; background: #f5f5f2;
+    font-size: 11px; color: #888; text-align: center; cursor: pointer;
+    transition: all 0.12s;
+  }
+  .pain-radio-row input[type=radio]:checked + .pain-radio-btn { font-weight: 500; }
+  .pain-radio-row.p-low  input[type=radio]:checked + .pain-radio-btn { background: #eaf3de; color: #3b6d11; border-color: #c0dd97; }
+  .pain-radio-row.p-mid  input[type=radio]:checked + .pain-radio-btn { background: #faeeda; color: #854f0b; border-color: #EF9F27; }
+  .pain-radio-row.p-high input[type=radio]:checked + .pain-radio-btn { background: #fcebeb; color: #a32d2d; border-color: #F09595; }
+  .pain-selected { font-size: 13px; font-weight: 500; color: #aaa; margin-top: 6px; min-height: 18px; }
+
+  /* TIMELINE */
   .timeline { display: flex; gap: 8px; margin: 0.75rem 0; }
   .tblock { flex: 1; background: white; border-radius: 10px; padding: 0.6rem 0.5rem; text-align: center; border: 0.5px solid #e0e0d8; }
   .tblock .label { font-size: 10px; color: #888; display: block; }
   .tblock .value { font-size: 13px; font-weight: 500; color: #1a1a1a; display: block; margin-top: 2px; }
+
+  /* PHASE HEADERS */
   .phase-header { font-size: 11px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin: 1.25rem 0 0.6rem; display: flex; align-items: center; gap: 8px; }
   .badge { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 5px; text-transform: none; letter-spacing: 0; }
-  .b-now { background: #e6f0fb; color: #185fa5; }
-  .b-w2  { background: #eaf3de; color: #3b6d11; }
-  .b-w3  { background: #faeeda; color: #854f0b; }
+  .b-soft { background: #f3eeff; color: #534ab7; }
+  .b-mob  { background: #e1f5ee; color: #0f6e56; }
+  .b-now  { background: #e6f0fb; color: #185fa5; }
+  .b-w2   { background: #eaf3de; color: #3b6d11; }
+  .b-w3   { background: #faeeda; color: #854f0b; }
+
+  /* EXERCISE CARDS */
   .card { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 8px; -webkit-user-select: none; user-select: none; }
   .card.done { border-color: #c0dd97; background: #f6fbed; }
   .card-top { display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer; }
-  .num { font-size: 13px; font-weight: 500; color: #378add; min-width: 18px; margin-top: 1px; }
+  .num { font-size: 13px; font-weight: 500; color: #378add; min-width: 20px; margin-top: 1px; }
   .ex-name { font-size: 15px; font-weight: 500; margin: 0 0 2px; line-height: 1.3; }
   .ex-dose { font-size: 13px; color: #666; margin: 0; line-height: 1.4; }
   .hint { font-size: 12px; color: #bbb; margin-top: 5px; }
   .detail { font-size: 13px; color: #555; line-height: 1.65; display: none; border-top: 0.5px solid #eee; margin-top: 10px; padding-top: 10px; }
   .detail.open { display: block; }
-  .done-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; border-radius: 20px; border: 0.5px solid #e0e0d8; background: white; font-size: 13px; color: #888; cursor: pointer; transition: all 0.15s; }
+
+  /* DIFFICULTY RATING */
+  .diff-row { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+  .diff-label { font-size: 12px; color: #aaa; white-space: nowrap; }
+  .diff-btns { display: flex; gap: 5px; flex: 1; }
+  .diff-btn {
+    flex: 1; padding: 5px 4px; border-radius: 8px;
+    border: 0.5px solid #e0e0d8; background: #f5f5f2;
+    font-size: 12px; color: #888; text-align: center; cursor: pointer;
+    transition: all 0.12s;
+  }
+  .diff-btn.selected-easy { background: #eaf3de; color: #3b6d11; border-color: #c0dd97; font-weight: 500; }
+  .diff-btn.selected-moderate { background: #faeeda; color: #854f0b; border-color: #EF9F27; font-weight: 500; }
+  .diff-btn.selected-hard { background: #fcebeb; color: #a32d2d; border-color: #F09595; font-weight: 500; }
+
+  .done-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 7px 14px; border-radius: 20px; border: 0.5px solid #e0e0d8; background: white; font-size: 13px; color: #888; cursor: pointer; }
   .done-btn.checked { background: #eaf3de; color: #3b6d11; border-color: #c0dd97; }
-  .save-btn { width: 100%; padding: 14px; background: #185fa5; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 1rem; transition: opacity 0.15s; }
+
+  .save-btn { width: 100%; padding: 14px; background: #185fa5; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 500; cursor: pointer; margin-top: 1rem; }
   .save-btn:active { opacity: 0.85; }
   .rule { font-size: 12px; color: #a32d2d; background: #fcebeb; border-radius: 8px; padding: 0.7rem 0.9rem; margin: 1rem 0 0; line-height: 1.6; }
+  .reset-wrap { text-align: center; padding: 1.5rem 0 0; }
+  .reset-btn { font-size: 13px; color: #ccc; background: none; border: none; cursor: pointer; padding: 8px 16px; }
+
+  /* HISTORY */
   .history-empty { text-align: center; padding: 3rem 1rem; color: #aaa; font-size: 14px; }
   .history-entry { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 0.9rem 1rem; margin-bottom: 8px; }
-  .history-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .history-date { font-size: 13px; font-weight: 500; color: #1a1a1a; }
-  .pain-pill { font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 20px; }
+  .history-date { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+  .pain-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+  .pain-pill { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
   .pain-low  { background: #eaf3de; color: #3b6d11; }
   .pain-mid  { background: #faeeda; color: #854f0b; }
   .pain-high { background: #fcebeb; color: #a32d2d; }
-  .ex-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-  .ex-tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #e6f0fb; color: #185fa5; }
-  .ex-tag.skipped { background: #f5f5f2; color: #bbb; }
+  .pain-na   { background: #f5f5f2; color: #bbb; }
+  .ex-list { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+  .ex-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .ex-row-name { color: #555; }
+  .ex-row-name.skipped { color: #ccc; }
+  .diff-tag { font-size: 11px; padding: 1px 7px; border-radius: 10px; }
+  .diff-easy     { background: #eaf3de; color: #3b6d11; }
+  .diff-moderate { background: #faeeda; color: #854f0b; }
+  .diff-hard     { background: #fcebeb; color: #a32d2d; }
+  .diff-none     { background: #f5f5f2; color: #bbb; }
+
+  /* CHART */
   .chart-wrap { background: white; border: 0.5px solid #e0e0d8; border-radius: 12px; padding: 1rem; margin: 1rem 0 0.75rem; }
-  .chart-title { font-size: 12px; color: #888; margin-bottom: 0.75rem; }
-  .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 80px; }
-  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .chart-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
-  .chart-bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 3px; }
+  .chart-title { font-size: 12px; color: #888; margin-bottom: 6px; }
+  .chart-legend { display: flex; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 11px; color: #888; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .chart-bars { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
+  .chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+  .chart-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; gap: 1px; }
+  .chart-bar { flex: 1; border-radius: 2px 2px 0 0; min-height: 2px; }
   .chart-day { font-size: 9px; color: #bbb; }
-  .reset-wrap { text-align: center; padding: 1.5rem 0 0; }
-  .reset-btn { font-size: 13px; color: #ccc; background: none; border: none; cursor: pointer; padding: 8px 16px; }
 </style>
 </head>
 <body>
@@ -101,13 +134,30 @@
 </div>
 
 <div class="page active" id="page-today">
-  <div class="pain-card">
-    <div class="pain-label">Pain level right now</div>
-    <input type="range" min="0" max="10" value="0" step="1" class="pain-slider" id="pain-slider" oninput="updatePain(this.value)">
-    <div class="pain-ends"><span>No pain</span><span>Worst pain</span></div>
-    <div class="pain-display">
-      <div class="pain-value" id="pain-value">0</div>
-      <div class="pain-desc" id="pain-desc">No pain</div>
+
+  <!-- PAIN TRACKING -->
+  <div class="pain-section">
+    <div class="section-title">Pain today (0 = none, 10 = worst)</div>
+    <div class="pain-grid">
+
+      <div class="pain-card">
+        <div class="pain-card-label">Morning</div>
+        <div class="pain-radios" id="radios-am"></div>
+        <div class="pain-selected" id="pain-am-sel">—</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-label">Post-routine</div>
+        <div class="pain-radios" id="radios-post"></div>
+        <div class="pain-selected" id="pain-post-sel">—</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-label">Evening</div>
+        <div class="pain-radios" id="radios-pm"></div>
+        <div class="pain-selected" id="pain-pm-sel">—</div>
+      </div>
+
     </div>
   </div>
 
@@ -117,80 +167,118 @@
     <div class="tblock"><span class="label">Full load</span><span class="value">4–6 wks</span></div>
   </div>
 
-  <div class="phase-header">Now — daily <span class="badge b-now">active recovery</span></div>
+  <!-- STEP 1: SOFT TISSUE -->
+  <div class="phase-header">Step 1 — soft tissue <span class="badge b-soft">do this first</span></div>
 
   <div class="card" id="ex-0">
     <div class="card-top" onclick="toggle('ex-0')"><div class="num">1</div><div style="flex:1">
-      <p class="ex-name">Isometric adductor squeeze</p>
-      <p class="ex-dose">3 × 10 sec holds — moderate effort only</p>
+      <p class="ex-name">Foam roll — quads & outer hip</p>
+      <p class="ex-dose">60 sec per area — pause on tender spots</p>
       <p class="hint">Tap for cues</p>
     </div></div>
-    <div class="detail">Lie on back, knees bent, rolled towel between knees. Squeeze at 50–60% effort — not max. Zero pain. If you feel anything at the groin, reduce effort further.<br>
-      <button class="done-btn" onclick="markDone('ex-0', this)">○ Mark done</button></div>
+    <div class="detail">Start with quads: lie face down, roller under one thigh, slowly roll from hip to knee. Pause on any tender spot for 5–10 seconds.<br><br>Then outer hip (TFL/IT band): lie on your side, roller just below the hip bone, work slowly toward the knee.<br><br>Avoid rolling directly on the inner thigh or groin.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-0','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-0','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-0','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-0',this)">○ Mark done</button></div>
   </div>
 
   <div class="card" id="ex-1">
     <div class="card-top" onclick="toggle('ex-1')"><div class="num">2</div><div style="flex:1">
+      <p class="ex-name">Lacrosse ball — glute & piriformis</p>
+      <p class="ex-dose">30–60 sec per spot — breathe into it</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Sit on the floor, lacrosse ball under one glute. Cross that ankle over the opposite knee to open up the piriformis. Find a tender spot and breathe — let your bodyweight sink in. Work 2–3 spots per side.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-1','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-1','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-1','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-1',this)">○ Mark done</button></div>
+  </div>
+
+  <!-- STEP 2: MOBILITY -->
+  <div class="phase-header">Step 2 — mobility <span class="badge b-mob">then this</span></div>
+
+  <div class="card" id="ex-2">
+    <div class="card-top" onclick="toggle('ex-2')"><div class="num">3</div><div style="flex:1">
+      <p class="ex-name">Supine lumbar mobility sequence</p>
+      <p class="ex-dose">Hold each position 20–30 sec</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">1. <strong>Knees to chest</strong> — hold 30 sec, gentle rock side to side.<br><br>2. <strong>Supine rotation</strong> — knees together, drop to one side, hold 20–30 sec. Let gravity do the work. Repeat other side.<br><br>3. <strong>Figure-4</strong> — ankle over opposite knee, gentle pull toward chest, 30 sec each side.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-2','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-2','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-2','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-2',this)">○ Mark done</button></div>
+  </div>
+
+  <!-- STEP 3: WEEK 1 -->
+  <div class="phase-header">Step 3 — week 1 exercises <span class="badge b-now">daily</span></div>
+
+  <div class="card" id="ex-3">
+    <div class="card-top" onclick="toggle('ex-3')"><div class="num">4</div><div style="flex:1">
+      <p class="ex-name">Isometric adductor squeeze</p>
+      <p class="ex-dose">3 × 10 sec holds — moderate effort only</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Lie on back, knees bent, rolled towel between knees. Squeeze at 50–60% effort — not max. Zero pain. If you feel anything at the groin, reduce effort further.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-3','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-3','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-3','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-3',this)">○ Mark done</button></div>
+  </div>
+
+  <div class="card" id="ex-4">
+    <div class="card-top" onclick="toggle('ex-4')"><div class="num">5</div><div style="flex:1">
       <p class="ex-name">Side-lying adductor raise</p>
       <p class="ex-dose">3 × 12 reps each side — 3 sec lowering phase</p>
       <p class="hint">Tap for cues</p>
     </div></div>
-    <div class="detail">Lie on side, bottom leg straight, top leg bent with foot flat in front. Raise bottom leg 6–8 inches, hold 1 sec, lower slowly over 3 seconds. Keep hips stacked.<br>
-      <button class="done-btn" onclick="markDone('ex-1', this)">○ Mark done</button></div>
-  </div>
-
-  <div class="card" id="ex-2">
-    <div class="card-top" onclick="toggle('ex-2')"><div class="num">3</div><div style="flex:1">
-      <p class="ex-name">Single-leg glute bridge</p>
-      <p class="ex-dose">3 × 10 reps each side — squeeze and hold 1 sec</p>
-      <p class="hint">Tap for cues</p>
-    </div></div>
-    <div class="detail">On your back, one knee bent, other leg extended. Drive through heel, raise hips, squeeze glute at top. Builds hip stability that reduces adductor demand during running gait.<br>
-      <button class="done-btn" onclick="markDone('ex-2', this)">○ Mark done</button></div>
-  </div>
-
-  <div class="card" id="ex-3">
-    <div class="card-top" onclick="toggle('ex-3')"><div class="num">4</div><div style="flex:1">
-      <p class="ex-name">Supine lumbar mobility sequence</p>
-      <p class="ex-dose">Once daily — hold each position 20–30 sec</p>
-      <p class="hint">Tap for cues</p>
-    </div></div>
-    <div class="detail">1. Knees to chest — gentle rock side to side.<br>2. Supine rotation — knees together, drop to one side, hold, repeat.<br>3. Figure-4 stretch — ankle over opposite knee, gentle pull.<br>
-      <button class="done-btn" onclick="markDone('ex-3', this)">○ Mark done</button></div>
-  </div>
-
-  <div class="phase-header">Week 2 — every other day <span class="badge b-w2">load progression</span></div>
-
-  <div class="card" id="ex-4">
-    <div class="card-top" onclick="toggle('ex-4')"><div class="num">5</div><div style="flex:1">
-      <p class="ex-name">Standing banded adduction</p>
-      <p class="ex-dose">3 × 12 reps each side — lightest band</p>
-      <p class="hint">Tap for cues</p>
-    </div></div>
-    <div class="detail">Anchor a light band at ankle height. Stand sideways, band around working ankle. Draw leg across body in front, control the return slowly. Lightest band available.<br>
-      <button class="done-btn" onclick="markDone('ex-4', this)">○ Mark done</button></div>
+    <div class="detail">Lie on side, bottom leg straight, top leg bent with foot flat in front. Raise bottom leg 6–8 inches, hold 1 sec, lower slowly over 3 seconds. Keep hips stacked. Pain-free range only.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-4','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-4','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-4','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-4',this)">○ Mark done</button></div>
   </div>
 
   <div class="card" id="ex-5">
     <div class="card-top" onclick="toggle('ex-5')"><div class="num">6</div><div style="flex:1">
+      <p class="ex-name">Single-leg glute bridge</p>
+      <p class="ex-dose">3 × 10 reps each side — squeeze glute first, then lift</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">On your back, one knee bent with foot close to glutes, other leg extended hovering in line with your thigh at the top.<br><br>Squeeze the glute before you lift. Drive through the heel. Only rise until hips are level — don't hyperextend.<br><br>If hamstring cramps: move foot closer to your glutes. If it persists, do double-leg bridges until glute firing improves.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-5','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-5','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-5','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-5',this)">○ Mark done</button></div>
+  </div>
+
+  <!-- STEP 4: WEEK 2 -->
+  <div class="phase-header">Step 4 — week 2 exercises <span class="badge b-w2">every other day</span></div>
+
+  <div class="card" id="ex-6">
+    <div class="card-top" onclick="toggle('ex-6')"><div class="num">7</div><div style="flex:1">
+      <p class="ex-name">Standing banded adduction</p>
+      <p class="ex-dose">3 × 12 reps each side — lightest band</p>
+      <p class="hint">Tap for cues</p>
+    </div></div>
+    <div class="detail">Anchor a light band at ankle height. Stand sideways, band around working ankle. Draw leg across body in front, control the return slowly. Stay upright. Lightest band available.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-6','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-6','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-6','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-6',this)">○ Mark done</button></div>
+  </div>
+
+  <div class="card" id="ex-7">
+    <div class="card-top" onclick="toggle('ex-7')"><div class="num">8</div><div style="flex:1">
       <p class="ex-name">Copenhagen plank — short lever</p>
       <p class="ex-dose">3 × 8 sec holds each side — build to 20 sec</p>
       <p class="hint">Tap for cues</p>
     </div></div>
-    <div class="detail">Lie on side, bottom ankle on low surface (chair seat). Support on forearm. Lift hips — straight line, bottom adductor doing the work. Short lever only until fully pain-free.<br>
-      <button class="done-btn" onclick="markDone('ex-5', this)">○ Mark done</button></div>
+    <div class="detail">Lie on side, bottom ankle on a low surface (chair seat). Support on forearm. Lift hips — straight line from head to foot, bottom adductor doing the work. Short lever only until fully pain-free.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-7','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-7','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-7','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-7',this)">○ Mark done</button></div>
   </div>
 
-  <div class="phase-header">Week 3 — return to running <span class="badge b-w3">impact reintroduction</span></div>
+  <!-- STEP 5: RETURN TO RUN -->
+  <div class="phase-header">Step 5 — return to running <span class="badge b-w3">when ready</span></div>
 
-  <div class="card" id="ex-6">
-    <div class="card-top" onclick="toggle('ex-6')"><div class="num">7</div><div style="flex:1">
+  <div class="card" id="ex-8">
+    <div class="card-top" onclick="toggle('ex-8')"><div class="num">9</div><div style="flex:1">
       <p class="ex-name">Run-walk protocol</p>
       <p class="ex-dose">Day 1: 5 min walk / 10 min jog / 5 min walk</p>
       <p class="hint">Tap for progression</p>
     </div></div>
-    <div class="detail">Gate: Copenhagen plank pain-free for 3 sessions before starting.<br><br>Day 1: 5 min walk → 10 min easy jog → 5 min walk.<br><br>Assess next morning. If pain-free: Day 3 do 20 min continuous easy jog. If not: return to week 2 for 3 more days.<br>
-      <button class="done-btn" onclick="markDone('ex-6', this)">○ Mark done</button></div>
+    <div class="detail">Gate: Copenhagen plank pain-free for 3 consecutive sessions before starting.<br><br>Day 1: 5 min walk → 10 min easy jog → 5 min walk.<br><br>Assess the next morning. If pain-free: Day 3 do 20 min continuous easy jog. If not: return to week 2 for 3 more days.<br><br>The morning pain reading is your primary signal.
+      <div class="diff-row"><span class="diff-label">Effort:</span><div class="diff-btns"><button class="diff-btn" onclick="setDiff('ex-8','easy',this)">Easy</button><button class="diff-btn" onclick="setDiff('ex-8','moderate',this)">Moderate</button><button class="diff-btn" onclick="setDiff('ex-8','hard',this)">Hard</button></div></div>
+      <button class="done-btn" onclick="markDone('ex-8',this)">○ Mark done</button></div>
   </div>
 
   <div class="rule">Stop any exercise that reproduces inner thigh or groin symptoms. Mild awareness is acceptable — pain is not.</div>
@@ -198,6 +286,7 @@
   <div class="reset-wrap"><button class="reset-btn" onclick="resetToday()">Reset today</button></div>
 </div>
 
+<!-- HISTORY PAGE -->
 <div class="page" id="page-history">
   <div id="chart-container"></div>
   <div id="history-list"></div>
@@ -215,19 +304,91 @@
 <script>
   if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
 
-  const EXERCISES = ['Isometric squeeze','Side-lying raise','Glute bridge','Lumbar mobility','Banded adduction','Copenhagen plank','Run-walk protocol'];
-  const PAIN_DESCS = ['No pain','Very mild','Mild','Mild-moderate','Moderate','Moderate','Moderate-severe','Severe','Severe','Very severe','Worst pain'];
+  const EXERCISES = ['Foam roll','Lacrosse ball','Lumbar mobility','Isometric squeeze','Side-lying raise','Glute bridge','Banded adduction','Copenhagen plank','Run-walk'];
+  const PAIN_LABELS = ['0','1','2','3','4','5','6','7','8','9','10'];
+  const PAIN_GROUPS = [
+    { label: '0–3', cls: 'p-low',  vals: [0,1,2,3] },
+    { label: '4–6', cls: 'p-mid',  vals: [4,5,6] },
+    { label: '7–10',cls: 'p-high', vals: [7,8,9,10] }
+  ];
 
   let todayDone = {};
-  let todayPain = 0;
+  let todayDiff = {};
+  let painAM = null, painPost = null, painPM = null;
 
   function todayKey() { return new Date().toISOString().slice(0,10); }
+  function painClass(v) { return v === null ? 'pain-na' : v <= 3 ? 'pain-low' : v <= 6 ? 'pain-mid' : 'pain-high'; }
+  function painLabel(v) { return v === null ? '—' : String(v); }
 
-  function updatePain(val) {
-    todayPain = parseInt(val);
-    document.getElementById('pain-value').textContent = val;
-    document.getElementById('pain-desc').textContent = PAIN_DESCS[val];
-    document.getElementById('pain-value').style.color = val <= 3 ? '#3b6d11' : val <= 6 ? '#854f0b' : '#a32d2d';
+  function buildRadios(containerId, selId, key) {
+    const container = document.getElementById(containerId);
+    // Build 11 individual radio buttons in a compact grid
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'display:flex;flex-wrap:wrap;gap:3px;justify-content:center;';
+    for (let i = 0; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = String(i);
+      btn.dataset.val = i;
+      btn.style.cssText = 'width:26px;height:26px;border-radius:6px;border:0.5px solid #e0e0d8;background:#f5f5f2;font-size:12px;color:#888;cursor:pointer;flex-shrink:0;';
+      btn.onclick = function() {
+        // Deselect all in this group
+        wrapper.querySelectorAll('button').forEach(b => {
+          b.style.background = '#f5f5f2';
+          b.style.color = '#888';
+          b.style.borderColor = '#e0e0d8';
+          b.style.fontWeight = '400';
+        });
+        // Select this one
+        const v = parseInt(this.dataset.val);
+        const isLow = v <= 3, isMid = v <= 6;
+        this.style.background = isLow ? '#eaf3de' : isMid ? '#faeeda' : '#fcebeb';
+        this.style.color = isLow ? '#3b6d11' : isMid ? '#854f0b' : '#a32d2d';
+        this.style.borderColor = isLow ? '#c0dd97' : isMid ? '#EF9F27' : '#F09595';
+        this.style.fontWeight = '500';
+        // Store value
+        if (key === 'am') painAM = v;
+        else if (key === 'post') painPost = v;
+        else painPM = v;
+        document.getElementById(selId).textContent = PAIN_LABELS[v] + '/10';
+        document.getElementById(selId).style.color = isLow ? '#3b6d11' : isMid ? '#854f0b' : '#a32d2d';
+      };
+      wrapper.appendChild(btn);
+    }
+    container.appendChild(wrapper);
+  }
+
+  function setRadioValue(containerId, selId, key, val) {
+    const container = document.getElementById(containerId);
+    const btns = container.querySelectorAll('button');
+    btns.forEach(b => {
+      b.style.background = '#f5f5f2';
+      b.style.color = '#888';
+      b.style.borderColor = '#e0e0d8';
+      b.style.fontWeight = '400';
+    });
+    const btn = container.querySelector(`button[data-val="${val}"]`);
+    if (btn) {
+      const isLow = val <= 3, isMid = val <= 6;
+      btn.style.background = isLow ? '#eaf3de' : isMid ? '#faeeda' : '#fcebeb';
+      btn.style.color = isLow ? '#3b6d11' : isMid ? '#854f0b' : '#a32d2d';
+      btn.style.borderColor = isLow ? '#c0dd97' : isMid ? '#EF9F27' : '#F09595';
+      btn.style.fontWeight = '500';
+      document.getElementById(selId).textContent = val + '/10';
+      document.getElementById(selId).style.color = isLow ? '#3b6d11' : isMid ? '#854f0b' : '#a32d2d';
+    }
+  }
+
+  function clearRadios(containerId, selId) {
+    const container = document.getElementById(containerId);
+    container.querySelectorAll('button').forEach(b => {
+      b.style.background = '#f5f5f2';
+      b.style.color = '#888';
+      b.style.borderColor = '#e0e0d8';
+      b.style.fontWeight = '400';
+    });
+    const sel = document.getElementById(selId);
+    sel.textContent = '—';
+    sel.style.color = '#aaa';
   }
 
   function toggle(id) {
@@ -237,6 +398,14 @@
     const isOpen = detail.classList.contains('open');
     detail.classList.toggle('open');
     hint.textContent = isOpen ? 'Tap for cues' : 'Tap to close';
+  }
+
+  function setDiff(id, level, btn) {
+    const idx = parseInt(id.split('-')[1]);
+    todayDiff[idx] = level;
+    const btns = btn.parentElement.querySelectorAll('.diff-btn');
+    btns.forEach(b => { b.className = 'diff-btn'; });
+    btn.classList.add('selected-' + level);
   }
 
   function markDone(id, btn) {
@@ -250,7 +419,12 @@
 
   function saveSession() {
     const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
-    sessions[todayKey()] = { date: todayKey(), pain: todayPain, done: { ...todayDone } };
+    sessions[todayKey()] = {
+      date: todayKey(),
+      painAM, painPost, painPM,
+      done: { ...todayDone },
+      diff: { ...todayDiff }
+    };
     localStorage.setItem('rehab_sessions', JSON.stringify(sessions));
     const btn = document.querySelector('.save-btn');
     btn.textContent = '✓ Session saved';
@@ -259,11 +433,14 @@
   }
 
   function resetToday() {
-    todayDone = {}; todayPain = 0;
-    document.getElementById('pain-slider').value = 0;
-    updatePain(0);
+    todayDone = {}; todayDiff = {};
+    painAM = null; painPost = null; painPM = null;
+    clearRadios('radios-am','pain-am-sel');
+    clearRadios('radios-post','pain-post-sel');
+    clearRadios('radios-pm','pain-pm-sel');
     document.querySelectorAll('.card').forEach(c => c.classList.remove('done'));
     document.querySelectorAll('.done-btn').forEach(b => { b.textContent = '○ Mark done'; b.classList.remove('checked'); });
+    document.querySelectorAll('.diff-btn').forEach(b => { b.className = 'diff-btn'; });
     document.querySelectorAll('.detail').forEach(d => d.classList.remove('open'));
     document.querySelectorAll('.hint').forEach(h => h.textContent = 'Tap for cues');
   }
@@ -279,13 +456,11 @@
     if (name === 'history') renderHistory();
   }
 
-  function painClass(v) { return v <= 3 ? 'pain-low' : v <= 6 ? 'pain-mid' : 'pain-high'; }
   function formatDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }); }
 
   function renderHistory() {
     const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
     const keys = Object.keys(sessions).sort();
-
     if (keys.length === 0) {
       document.getElementById('chart-container').innerHTML = '';
       document.getElementById('history-list').innerHTML = '<div class="history-empty">No sessions logged yet.<br>Complete today\'s session and tap Save.</div>';
@@ -295,47 +470,83 @@
     const last14 = keys.slice(-14);
     const bars = last14.map(k => {
       const s = sessions[k];
-      const pct = Math.max((s.pain / 10) * 100, 3);
-      const color = s.pain <= 3 ? '#639922' : s.pain <= 6 ? '#BA7517' : '#E24B4A';
+      const vals = [s.painAM, s.painPost, s.painPM];
+      const colors = ['#9FE1CB','#378add','#7F77DD'];
+      const barsHTML = vals.map((v, i) => {
+        if (v === null || v === undefined) return `<div class="chart-bar" style="height:3px;background:#eee;flex:1"></div>`;
+        return `<div class="chart-bar" style="height:${Math.max((v/10)*100,4)}%;background:${colors[i]};flex:1"></div>`;
+      }).join('');
       const day = new Date(k + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'narrow' });
-      return `<div class="chart-col"><div class="chart-bar-wrap"><div class="chart-bar" style="height:${pct}%;background:${color}"></div></div><div class="chart-day">${day}</div></div>`;
+      return `<div class="chart-col"><div class="chart-bar-wrap">${barsHTML}</div><div class="chart-day">${day}</div></div>`;
     }).join('');
 
-    document.getElementById('chart-container').innerHTML = `<div class="chart-wrap" style="margin-top:1rem"><div class="chart-title">Pain level trend (0–10)</div><div class="chart-bars">${bars}</div></div>`;
+    document.getElementById('chart-container').innerHTML = `
+      <div class="chart-wrap" style="margin-top:1rem">
+        <div class="chart-title">Pain trend (0–10)</div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#9FE1CB"></div>Morning</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#378add"></div>Post-routine</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#7F77DD"></div>Evening</div>
+        </div>
+        <div class="chart-bars">${bars}</div>
+      </div>`;
 
     document.getElementById('history-list').innerHTML = keys.slice().reverse().map(k => {
       const s = sessions[k];
-      const doneCount = Object.values(s.done).filter(Boolean).length;
-      const tags = EXERCISES.map((n, i) => `<span class="ex-tag ${s.done[i] ? '' : 'skipped'}">${n}</span>`).join('');
+      const doneCount = Object.values(s.done || {}).filter(Boolean).length;
+      const pillAM   = `<span class="pain-pill ${painClass(s.painAM ?? null)}">AM: ${painLabel(s.painAM ?? null)}</span>`;
+      const pillPost = `<span class="pain-pill ${painClass(s.painPost ?? null)}">Post: ${painLabel(s.painPost ?? null)}</span>`;
+      const pillPM   = `<span class="pain-pill ${painClass(s.painPM ?? null)}">PM: ${painLabel(s.painPM ?? null)}</span>`;
+      const exRows = EXERCISES.map((name, i) => {
+        const done = s.done && s.done[i];
+        const diff = s.diff && s.diff[i];
+        const diffTag = diff
+          ? `<span class="diff-tag diff-${diff}">${diff.charAt(0).toUpperCase() + diff.slice(1)}</span>`
+          : `<span class="diff-tag diff-none">—</span>`;
+        return `<div class="ex-row">
+          <span class="ex-row-name ${done ? '' : 'skipped'}">${done ? '✓' : '○'} ${name}</span>
+          ${done ? diffTag : ''}
+        </div>`;
+      }).join('');
       return `<div class="history-entry">
-        <div class="history-row"><div class="history-date">${formatDate(k)}</div><span class="pain-pill ${painClass(s.pain)}">Pain: ${s.pain}/10</span></div>
+        <div class="history-date">${formatDate(k)}</div>
+        <div class="pain-pills">${pillAM}${pillPost}${pillPM}</div>
         <div style="font-size:12px;color:#888;margin-bottom:6px">${doneCount} of ${EXERCISES.length} completed</div>
-        <div class="ex-tags">${tags}</div>
+        <div class="ex-list">${exRows}</div>
       </div>`;
     }).join('');
   }
 
   (function init() {
+    buildRadios('radios-am','pain-am-sel','am');
+    buildRadios('radios-post','pain-post-sel','post');
+    buildRadios('radios-pm','pain-pm-sel','pm');
+
     const sessions = JSON.parse(localStorage.getItem('rehab_sessions') || '{}');
     const today = sessions[todayKey()];
-    // Only restore state if the saved session is from today
     if (today && today.date === todayKey()) {
-      todayPain = today.pain;
+      if (today.painAM !== null && today.painAM !== undefined) { painAM = today.painAM; setRadioValue('radios-am','pain-am-sel','am',painAM); }
+      if (today.painPost !== null && today.painPost !== undefined) { painPost = today.painPost; setRadioValue('radios-post','pain-post-sel','post',painPost); }
+      if (today.painPM !== null && today.painPM !== undefined) { painPM = today.painPM; setRadioValue('radios-pm','pain-pm-sel','pm',painPM); }
       todayDone = today.done || {};
-      document.getElementById('pain-slider').value = todayPain;
-      updatePain(todayPain);
+      todayDiff = today.diff || {};
       Object.entries(todayDone).forEach(([idx, done]) => {
         if (done) {
           const card = document.getElementById('ex-' + idx);
-          if (card) {
-            card.classList.add('done');
-            const btn = card.querySelector('.done-btn');
-            if (btn) { btn.textContent = '✓ Done'; btn.classList.add('checked'); }
-          }
+          if (card) { card.classList.add('done'); const btn = card.querySelector('.done-btn'); if (btn) { btn.textContent = '✓ Done'; btn.classList.add('checked'); } }
+        }
+      });
+      Object.entries(todayDiff).forEach(([idx, level]) => {
+        const card = document.getElementById('ex-' + idx);
+        if (card) {
+          const btns = card.querySelectorAll('.diff-btn');
+          btns.forEach(b => { b.className = 'diff-btn'; });
+          const levels = ['easy','moderate','hard'];
+          const btn = card.querySelectorAll('.diff-btn')[levels.indexOf(level)];
+          if (btn) btn.classList.add('selected-' + level);
         }
       });
     }
-    // If no session today, start clean regardless of what was saved before
   })();
 </script>
 </body>
