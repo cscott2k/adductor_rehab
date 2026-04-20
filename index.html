@@ -316,7 +316,7 @@
   let todayDiff = {};
   let painAM = null, painPost = null, painPM = null;
 
-  function todayKey() { return new Date().toISOString().slice(0,10); }
+  function todayKey() { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
   function painClass(v) { return v === null ? 'pain-na' : v <= 3 ? 'pain-low' : v <= 6 ? 'pain-mid' : 'pain-high'; }
   function painLabel(v) { return v === null ? '—' : String(v); }
 

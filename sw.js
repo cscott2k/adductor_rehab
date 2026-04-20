@@ -1,4 +1,4 @@
-const CACHE = 'adductor-rehab-v1';
+const CACHE = 'adductor-rehab-v2';
 const ASSETS = ['./index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
